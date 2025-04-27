@@ -1,5 +1,5 @@
 #include "Principal.h"
-#include "Personagem.h"
+//#include "Personagem.h"
 
 Principal::Principal() {
 }
@@ -12,17 +12,21 @@ void Principal::executar() {
 
 void Principal::Menu() {
 	int a = -1;
-	while (a != 3) {
+	while (a != 5) {
 		system("cls");
 		cout << "RPG2" << endl <<endl<<
 			"1. Cadastrar" << endl <<
 			"2. Executar" << endl <<
-			"3. Sair" << endl<<endl;
+			"3. Gravar" << endl <<
+			"4. Recuperar" << endl <<
+			"5. Sair" << endl<<endl;
 		cin >> a;
 		switch (a) {
 		case 1: { MenuCad(); }break;
 		case 2: { MenuExe(); }break;
-		case 3: { cout << "FIM" << endl; }break;
+		case 3: { MenuGravar(); }break;
+		case 4: { MenuRecuperar(); }break;
+		case 5: { cout << "FIM" << endl; }break;
 		default: { cout << "opcao invalida, tente novamente!" << endl; system("Pause"); }break;
 		}
 	}
@@ -109,19 +113,25 @@ void Principal::NovoPersonagem(){
 		cout << "personagem ja cadastrado" << endl;
 		return;
 	}
-	pPer = new Personagem(nome);
+	pPer = new Personagem;
+	pPer->setNome(nome);
+	pPer->printAll();
+	system("Pause");
 	Lpers.novoPer(pPer);
+	Lpers.listar();
+	Lpers.listarNomes();
+	system("Pause");
 
 	int a = -1;
 	while (a != 3) {
 		system("cls");
-		cout << "Personagem " << nome <<endl << endl <<
+		cout << "Personagem " << nome <<" // " << pPer->getNome().getpStr() << endl << endl <<
 			"1. Adicionar status" << endl <<
 			"2. Adicionar poderes" << endl <<
 			"3. Voltar" << endl << endl;
 		cin >> a;
 		switch (a) {
-		case 1: { MenuStatus(pPer); system("Pause"); }break;
+		case 1: { MenuStatusPer(pPer); system("Pause"); }break;
 		case 2: { NovoPoder(pPer); system("Pause"); }break;
 		case 3: {}break;//voltar
 		default: { cout << "opcao invalida, tente novamente!" << endl; system("Pause"); }break;
@@ -129,18 +139,21 @@ void Principal::NovoPersonagem(){
 	}
 }
 
-void Principal::MenuStatus(Personagem* pp) {
-	int a=-1,b=-1;
-	while (a!=4) {
+void Principal::MenuStatusPer(Personagem* pp) {
+	int a = -1, b = -1;
+	while (a != 4) {
 		system("cls");
-		cout << pp->getNome().getpStr() << endl << endl <<
-			"1. Vida: " << pp->getVida()<<endl <<
+		cout << "Personagem  "<<pp->getNome().getpStr() << endl << endl <<
+			"1. Vida: " << pp->getVida() << endl <<
 			"2. Energia: " << pp->getEner() << endl <<
 			"3. Destreza: " << pp->getDex() << endl <<
-			"4. Voltar" << endl << endl;
+			"4. Voltar" << endl << endl <<
+			"SELECIONE UMA OPCAO" << endl << endl;
 		cin >> a;
-		cout << "Novo valor: ";
-		cin >> b;
+		if (a != 4) {
+			cout << "Novo valor: ";
+			cin >> b;
+		}
 		switch (a) {
 		case 1: { pp->setVida(b);system("Pause"); }break;
 		case 2: { pp->setEner(b); system("Pause"); }break;
@@ -148,30 +161,38 @@ void Principal::MenuStatus(Personagem* pp) {
 		case 4: {}break;//voltar
 		default: { cout << "opcao invalida, tente novamente!" << endl; system("Pause"); }break;
 		}
+	}
 }
 
-	void Principal::MenuStatus(Poder* pp) {
-		int a = -1, b = -1;
-		while (a != 4) {
-			system("cls");
-			cout << pp->getNome().getpStr() << endl << endl <<
-				"1. Dano: " << pp->getDano() << endl <<
-				"2. Cura: " << pp->getCura() << endl <<
-				"3. Custo: " << pp->getCusto() << endl <<
-				"4. Voltar" << endl << endl;
-			cin >> a;
+void Principal::MenuStatusPod(Poder* pp) {
+	int a = -1, b = -1;
+	while (a != 4) {
+		system("cls");
+		cout << pp->getNome().getpStr() << endl << endl <<
+			"1. Dano: " << pp->getDano() << endl <<
+			"2. Cura: " << pp->getCura() << endl <<
+			"3. Custo: " << pp->getCusto() << endl <<
+			"4. Voltar" << endl << endl;
+		cin >> a;
+		if (a != 4) {
 			cout << "Novo valor: ";
 			cin >> b;
-			switch (a) {
-			case 1: { pp->setDano(b);system("Pause"); }break;
-			case 2: { pp->setCura(b); system("Pause"); }break;
-			case 3: { pp->setCusto(b); system("Pause"); }break;
-			case 4: {}break;//voltar
-			default: { cout << "opcao invalida, tente novamente!" << endl; system("Pause"); }break;
-			}
 		}
+		switch (a) {
+		case 1: { pp->setDano(b);system("Pause"); }break;
+		case 2: { pp->setCura(b); system("Pause"); }break;
+		case 3: { pp->setCusto(b); system("Pause"); }break;
+		case 4: {}break;//voltar
+		default: { cout << "opcao invalida, tente novamente!" << endl; system("Pause"); }break;
+		}
+	}
+}
 
 void Principal::EditarPersonagem() {
+	if (Lpers.vazia()) {
+		cout << "nao ha personagens cadastrados no programa para serem editados!" << endl;
+		return;
+	}
 	char nome[20];
 	int a = -1;
 	Lpers.listarNomes();
@@ -182,36 +203,26 @@ void Principal::EditarPersonagem() {
 		//cout << "personagem nao encontrado! " << endl;
 		while (a != 2) {
 			system("cls");
-			cout << "personagem nao encontrado! " << endl << endl<<
+			cout << "personagem nao encontrado! " << endl << endl <<
 				"1. Tentar novamente" << endl <<
 				"2. Voltar" << endl << endl;
 			cin >> a;
 			switch (a) {
-			case 1: { EditarPersonagem(); system("Pause");}break;
+			case 1: { EditarPersonagem(); system("Pause"); }break;
 			case 2: {}break;//voltar
 			default: { cout << "opcao invalida, tente novamente!" << endl; }break;
 			}
 		}
 	}
-	else {
-		cout << "vida: ";
-		cin >> a;
-		pp->setVida(a);
-		cout << "energia: ";
-		cin >> a;
-		pp->setEner(a);
-		cout << "Destreza: ";
-		cin >> a;
-		pp->setDex(a);
-		cout << "personagem editado com sucesso!" << endl;
-	}
+	else
+		MenuStatusPer(pp);
 }
 
 void Principal::NovoPoder(Personagem* pp){
 	char nome[20];
 	cout << "nome: ";
 	cin >> nome;
-	Poder* pPod = pp->getLista().localiza(nome);
+	Poder* pPod = pp->localizaNomeLista(nome);
 	
 	if (pPod != NULL) {
 		cout << "personagem ja cadastrado" << endl;
@@ -229,8 +240,9 @@ void Principal::NovoPoder(Personagem* pp){
 			"3. Voltar" << endl << endl;
 		cin >> a;
 		switch (a) {
-		case 1: { MenuStatus(pPod); system("Pause"); }break;
+		case 1: { MenuStatusPod(pPod); system("Pause"); }break;
 		case 2: {
+			cout << "Descricao: ";
 			char des[50];
 			cin >> des;
 			pPod->setDescricao(des);
@@ -256,7 +268,7 @@ void Principal::NovoPoder() {
 	Lpods.novoPod(pPod);
 	char des[50];
 	int a = -1;
-	while (a != 3) {
+	while (a != 3) {//LOOP INFINITO!
 		system("cls");
 		cout << "Poder " << nome << endl << endl <<
 			"1. Adicionar status" << endl <<
@@ -264,7 +276,7 @@ void Principal::NovoPoder() {
 			"3. Voltar" << endl << endl;
 		cin >> a;
 		switch (a) {
-		case 1: { MenuStatus(pPod); system("Pause"); }break;
+		case 1: { MenuStatusPod(pPod); system("Pause"); }break;
 		case 2: { cin >> des;pPod->setDescricao(nome); system("Pause"); }break;
 		case 3: {}break;//voltar
 		default: { cout << "opcao invalida, tente novamente!" << endl; system("Pause"); }break;
@@ -273,41 +285,78 @@ void Principal::NovoPoder() {
 }
 
 void Principal::EditarPoder() {
+	if (Lpods.vazia()) {
+		cout << "nao ha poderes cadastrados no programa para serem editados!" << endl;
+		return;
+	}
 	char nome[20];
 	int a = -1;
-	Lpers.listarNomes();
-	cout << endl << "qual personagem? " << endl;
+	Lpods.listarNomes();
+	cout << endl << "qual poder? " << endl;
 	cin >> nome;
-	Personagem* pp = Lpers.localiza(nome);
+	Poder* pp = Lpods.localiza(nome);
 	if (pp == NULL) {
-		//cout << "personagem nao encontrado! " << endl;
 		while (a != 2) {
 			system("cls");
-			cout << "personagem nao encontrado! " << endl << endl <<
+			cout << "poder nao encontrado! " << endl << endl <<
 				"1. Tentar novamente" << endl <<
 				"2. Voltar" << endl << endl;
 			cin >> a;
 			switch (a) {
-			case 1: { EditarPersonagem(); system("Pause"); }break;
+			case 1: { EditarPoder(); system("Pause"); }break;
 			case 2: {}break;//voltar
 			default: { cout << "opcao invalida, tente novamente!" << endl; }break;
 			}
 		}
 	}
-	else {
-		cout << "vida: ";
+	else 
+		MenuStatusPod(pp);
+}
+
+
+void Principal::MenuGravar(){
+	int a = -1;
+	while (a != 5) {
+		system("cls");
+		cout << "MENU GRAVAR" << endl << endl <<
+			"1. Gravar tudo" << endl <<
+			"2. Gravar personagens" << endl <<
+			"3. Gravar poderes" << endl <<
+			"4. Sair" << endl << endl;
 		cin >> a;
-		pp->setVida(a);
-		cout << "energia: ";
+		switch (a) {
+		case 1: { GravarTudo(); }break;
+		case 2: { GravarPer(); }break;
+		case 3: { GravarPod(); }break;
+		case 4: { cout << "FIM" << endl; }break;
+		default: { cout << "opcao invalida, tente novamente!" << endl; system("Pause"); }break;
+		}
+	}
+}
+void Principal::MenuRecuperar(){
+	int a = -1;
+	while (a != 5) {
+		system("cls");
+		cout << "MENU RECUPERAR" << endl << endl <<
+			"1. Recuperar tudo" << endl <<
+			"2. Recuperar personagens" << endl <<
+			"3. Recuperar poderes" << endl <<
+			"4. Sair" << endl << endl;
 		cin >> a;
-		pp->setEner(a);
-		cout << "Destreza: ";
-		cin >> a;
-		pp->setDex(a);
-		cout << "personagem editado com sucesso!" << endl;
+		switch (a) {
+		case 1: { RecuperarTudo(); }break;
+		case 2: { RecuperarPer(); }break;
+		case 3: { RecuperarPod(); }break;
+		case 4: { cout << "FIM" << endl; }break;
+		default: { cout << "opcao invalida, tente novamente!" << endl; system("Pause"); }break;
+		}
 	}
 }
 
-void Principal::MenuStatus(Poder* pp) {}
+void Principal::GravarTudo(){}
+void Principal::GravarPer() { Lpers.Gravar(); }
+void Principal::GravarPod(){ Lpods.Gravar(); }
 
-void Principal::MenuStatus(Personagem* pp) {}
+void Principal::RecuperarTudo() {}
+void Principal::RecuperarPer() { Lpers.Recuperar(); }
+void Principal::RecuperarPod() { Lpods.Recuperar(); }

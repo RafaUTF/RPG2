@@ -15,5 +15,10 @@ public:
 	void listar();
 	void listarNomes();
 
+	bool vazia();
+
+	void Gravar();
+	void Recuperar();
+
 };
 

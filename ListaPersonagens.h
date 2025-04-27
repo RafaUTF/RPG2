@@ -12,9 +12,15 @@ public:
 	~ListaPersonagens();
 
 	Personagem* localiza(const char* n);
-	void novoPer(Personagem* pp);
+	void incluirPer(Personagem* pp);
 	void listar();
 	void listarNomes();
 
+	bool vazia();
+
+	void Gravar();
+	void Recuperar();
+
+	void limpaLista();
 };
 

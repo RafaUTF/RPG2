@@ -9,11 +9,15 @@ void string::inicializa(const char* str) {
 	copia(pStr, str);
 }
 
-string::~string() { destroi(); }
+string::~string() { 
+	//destroi(); NAO POSSO DESTRUIR TEMPORARIOS(ACHO)!
+}
 
 void string::destroi() {
-	delete[]pStr;
-	pStr = NULL;
+	if (pStr != NULL) {//se nao e null eh pq esta alocada
+		delete[]pStr;
+		pStr = NULL;
+	}
 }
 
 const char* string::getpStr() { return pStr; }
@@ -39,6 +43,7 @@ void string::setStr(const char* str){
 	destroi();
 	inicializa(str);
 }
+void string::setStr(string s) { setStr(s.getpStr()); }
 
 void string::operator = (const char* s) {
 	if (pStr != NULL)
@@ -159,4 +164,8 @@ string string::operator - (string& s) {
 
 char string::operator [] (int i){
 	return pStr[i];
+}
+
+void string::print() {
+	cout << pStr << endl;
 }

@@ -10,6 +10,7 @@ ListaPoderes::~ListaPoderes() {
 	pAtual = NULL;
 	pPer = NULL;
 }
+
 Poder* ListaPoderes::localiza(const char* n) {
 	for (ElPoder* pex = pInicio;pex != NULL;pex = pex->getpProx())
 		if (pex->getpPod()->getNome() == n)
@@ -38,3 +39,10 @@ void ListaPoderes::listarNomes() {
 	for (ElPoder* pex = pInicio;pex != NULL;pex = pex->getpProx())
 		cout << pex->getpPod()->getNome().getpStr() << endl;
 }
+
+bool ListaPoderes::vazia() {
+	return pInicio == NULL ? true : false;
+}
+
+void ListaPoderes::Gravar(){}
+void ListaPoderes::Recuperar(){}

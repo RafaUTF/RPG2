@@ -17,3 +17,7 @@ ElPersonagem* ElPersonagem::getpProx() { return pProx; }
 
 void ElPersonagem::setpPer(Personagem* pper) { pPer = pper; }
 Personagem* ElPersonagem::getpPer() { return pPer; }
+
+void  ElPersonagem::printNome() {
+	cout << pPer->getNome().getpStr() << endl;
+}

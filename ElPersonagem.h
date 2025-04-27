@@ -18,5 +18,7 @@ public:
 
 	void setpPer(Personagem* pper);
 	Personagem* getpPer();
+
+	void printNome();
 };
 

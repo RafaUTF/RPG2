@@ -13,6 +13,9 @@ public:
 	const char* getpStr();
 	int getTam();
 	void setStr(const char* str);
+	void setStr(string s);
+
+	void print();
 
 	void operator = (const char* s);
 	void operator = (string& s);
@@ -34,10 +37,12 @@ public:
 	char operator [] (int i);
 
 	void copia(char* Str, const char* str);
+
+	void destroi();
 private:
 	void inicializa(const char* str);
 	int calcTam(const char* str);
-	void destroi();
+	
 
 };
 

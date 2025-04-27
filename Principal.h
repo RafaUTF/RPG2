@@ -2,11 +2,11 @@
 //#include "Personagem.h"
 #include "ListaPersonagens.h"
 //#include "ListaPoderes.h"
-#include "Poder.h"
-#include <iostream>
-using std::cin;
-using std::cout;
-using std::endl;
+//#include "Poder.h"
+//#include <iostream>
+//using std::cin;
+//using std::cout;
+//using std::endl;
 
 class Principal
 {
@@ -32,9 +32,19 @@ public:
 	void EditarPoder();
 
 
-	void MenuStatus(Personagem* pp);
-	void MenuStatus(Poder* pp);
+	void MenuStatusPer(Personagem* pp);
+	void MenuStatusPod(Poder* pp);
 	~Principal();
 
+	void MenuGravar();
+	void MenuRecuperar();
+
+	void GravarTudo();
+	void GravarPer();
+	void GravarPod();
+
+	void RecuperarTudo();
+	void RecuperarPer();
+	void RecuperarPod();
 };
 

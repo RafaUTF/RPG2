@@ -127,7 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Simao\MyString\string.cpp" />
     <ClCompile Include="ElPersonagem.cpp" />
     <ClCompile Include="ElPoder.cpp" />
     <ClCompile Include="ListaPersonagens.cpp" />
@@ -136,10 +135,9 @@
     <ClCompile Include="Personagem.cpp" />
     <ClCompile Include="Poder.cpp" />
     <ClCompile Include="Principal.cpp" />
+    <ClCompile Include="string.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Simao\MyString\stdafx.h" />
-    <ClInclude Include="..\..\Simao\MyString\string.h" />
     <ClInclude Include="ElPersonagem.h" />
     <ClInclude Include="ElPoder.h" />
     <ClInclude Include="ListaPersonagens.h" />
@@ -147,6 +145,8 @@
     <ClInclude Include="Personagem.h" />
     <ClInclude Include="Poder.h" />
     <ClInclude Include="Principal.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="string.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

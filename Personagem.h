@@ -1,6 +1,6 @@
 #pragma once
 #include "ListaPoderes.h"
-#include "string.h"
+//#include "string.h"
 
 class Personagem
 {
@@ -25,6 +25,8 @@ public:
 	int getDex();
 
 	ListaPoderes* getLista();
+
+	Poder* localizaNomeLista(const char* n);
 
 	void printAll();
 };

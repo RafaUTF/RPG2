@@ -1,5 +1,5 @@
 #include "Personagem.h"
-#include <string.h>
+//#include <string.h>
 Personagem::Personagem(const char* n, int v, int e, int d):
 vida(v),energia(e),destreza(d),nome(n){}
 Personagem::~Personagem() {}
@@ -21,3 +21,7 @@ void Personagem::printAll() {
 }
 
 ListaPoderes* Personagem::getLista() { return &habilidades; }
+
+Poder* Personagem::localizaNomeLista(const char* n){
+	return habilidades.localiza(n);
+}
